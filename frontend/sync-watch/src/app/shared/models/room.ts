@@ -1,3 +1,4 @@
 export interface Room {
-  id: string;
+  id?: string;
+  exists: true;
 }
