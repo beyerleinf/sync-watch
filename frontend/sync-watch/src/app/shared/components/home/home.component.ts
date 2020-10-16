@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit {
 
   createRoom() {
     this.room.createRoom().subscribe(room => {
-      console.log('created room', room);
       this.router.navigate(['room', room.id]);
     });
   }

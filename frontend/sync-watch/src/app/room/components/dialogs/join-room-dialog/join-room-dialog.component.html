@@ -1,0 +1,13 @@
+<h1>Join room</h1>
+
+<div class="form">
+  <mat-form-field>
+    <mat-label>Your Name</mat-label>
+    <input matInput type="text" [(ngModel)]="name" />
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions class="buttons">
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button mat-dia [mat-dialog-close]="submit()" [disabled]="!name || name === ''">Join</button>
+</div>

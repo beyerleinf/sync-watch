@@ -1,0 +1,29 @@
+.room {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 64px - 32px - 32px - 16px - 32px - 16px);
+
+  .users {
+    margin-bottom: 16px;
+  }
+
+  .search {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    mat-form-field {
+      flex-basis: 85%;
+    }
+
+    .button {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  .video {
+    flex-grow: 1;
+  }
+}

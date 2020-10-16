@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'sync-watch/src/environments/environment';
 import { Room } from '../../models/room';
 import { Socket } from 'ngx-socket-io';
+import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
+import { User } from '../../models';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +20,63 @@ export class RoomService {
     return this.http.get<Room>(`${environment.serverUrl}/rooms/${id}`, {});
   }
 
-  joinRoom(id: string) {
-    this.socket.emit('joinRoom', { id });
+  joinRoom(id: string, name: string) {
+    this.socket.emit('joinRoom', { id, name });
+  }
+
+  setVideo(id: string, videoId: string) {
+    this.socket.emit('setVideo', { id, videoId });
+  }
+
+  playVideo(id: string) {
+    this.socket.emit('playVideo', { id });
+  }
+
+  pauseVideo(id: string) {
+    this.socket.emit('pauseVideo', { id });
+  }
+
+  videoSync(id: string, time: number) {
+    this.socket.emit('videoSync', { id, time });
+  }
+
+  getUsers() {
+    return new Observable<User[]>(subscriber => {
+      this.socket.on('users', (users: User[]) => {
+        subscriber.next(users);
+      });
+    });
+  }
+
+  getCurrentVideo() {
+    return new Observable<string>(subscriber => {
+      this.socket.on('currentVideo', (videoId: string) => {
+        subscriber.next(videoId);
+      });
+    });
+  }
+
+  onPlayVideo() {
+    return new Observable<void>(subscriber => {
+      this.socket.on('playVideo', () => {
+        subscriber.next();
+      });
+    });
+  }
+
+  onPauseVideo() {
+    return new Observable<void>(subscriber => {
+      this.socket.on('pauseVideo', () => {
+        subscriber.next();
+      });
+    });
+  }
+
+  onVideoSync() {
+    return new Observable<number>(subscriber => {
+      this.socket.on('videoSync', ({ time }) => {
+        subscriber.next(time);
+      });
+    });
   }
 }
