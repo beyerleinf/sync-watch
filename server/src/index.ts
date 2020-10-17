@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as SocketIO from 'socket.io';
 import * as http from 'http';
 import {generate as shortid} from 'shortid';
-import roomRoutes from './routes/room.routes';
+// import roomRoutes from './routes/room.routes';
 import {Room} from './models/room';
 import * as cors from 'cors';
 import {UserRole} from './models';
