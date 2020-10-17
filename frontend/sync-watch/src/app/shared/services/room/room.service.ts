@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'sync-watch/src/environments/environment';
-import { Room } from '../../models/room';
 import { Socket } from 'ngx-socket-io';
-import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
+import { Observable } from 'rxjs';
+import { environment } from 'sync-watch/src/environments/environment';
 import { User } from '../../models';
+import { Room } from '../../models/room';
 
 @Injectable({
   providedIn: 'root',
