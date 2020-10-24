@@ -1,2 +1,2 @@
-export {Room} from './room';
-export {UserRole, User} from './user';
+export { Room } from './room';
+export { User } from './user';
