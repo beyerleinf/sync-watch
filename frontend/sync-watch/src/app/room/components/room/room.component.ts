@@ -5,6 +5,7 @@ import { YouTubePlayer } from '@angular/youtube-player';
 import { Observable } from 'rxjs';
 import { User } from 'sync-watch/src/app/shared/models';
 import { RoomService } from 'sync-watch/src/app/shared/services';
+import { Room } from '../../../shared/models';
 import { JoinRoomDialogComponent } from '../dialogs';
 
 @Component({
@@ -19,6 +20,7 @@ export class RoomComponent implements OnInit {
   roomId: string;
   users$: Observable<User[]>;
   currentVideoId: string;
+  currentRoom: Room;
 
   currentState = '';
 
@@ -74,14 +76,15 @@ export class RoomComponent implements OnInit {
 
     this.room.getRoom(this.roomId).subscribe(
       room => {
-        const dialogRef = this.dialog.open(JoinRoomDialogComponent, { width: '33%', hasBackdrop: true });
-        dialogRef.afterClosed().subscribe(dialogResult => {
-          if (dialogResult) {
-            this.room.joinRoom(room.id, dialogResult.name);
-          } else {
-            this.router.navigate(['/']);
-          }
-        });
+        this.currentRoom = room;
+        // const dialogRef = this.dialog.open(JoinRoomDialogComponent, { width: '33%', hasBackdrop: true });
+        // dialogRef.afterClosed().subscribe(dialogResult => {
+        //   if (dialogResult) {
+        //     this.room.joinRoom(room.id, dialogResult.name);
+        //   } else {
+        //     this.router.navigate(['/']);
+        //   }
+        // });
       },
       error => {
         if (!error.exists) {

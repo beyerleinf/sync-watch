@@ -4,7 +4,10 @@ import { HomeComponent } from './shared/components';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'room', loadChildren: () => import('./room/room.module').then(m => m.RoomModule) },
+  {
+    path: 'room',
+    loadChildren: () => import(/* webpackChunkName: 'room' */ './room/room.module').then(m => m.RoomModule),
+  },
   { path: '**', redirectTo: '/' },
 ];
 

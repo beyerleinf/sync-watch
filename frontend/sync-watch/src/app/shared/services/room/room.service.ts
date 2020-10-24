@@ -12,9 +12,9 @@ import { Room } from '../../models/room';
 export class RoomService {
   constructor(private http: HttpClient, private socket: Socket) {}
 
-  createRoom() {
-    return this.http.post<Room>(`${environment.serverUrl}/rooms`, {});
-  }
+  // createRoom() {
+  //   return this.http.post<Room>(`${environment.serverUrl}/rooms`, {});
+  // }
 
   getRoom(id: string) {
     return this.http.get<Room>(`${environment.serverUrl}/rooms/${id}`, {});
@@ -22,6 +22,10 @@ export class RoomService {
 
   joinRoom(id: string, name: string) {
     this.socket.emit('joinRoom', { id, name });
+  }
+
+  createRoom() {
+    this.socket.emit('createRoom');
   }
 
   setVideo(id: string, videoId: string) {
@@ -52,6 +56,14 @@ export class RoomService {
     return new Observable<string>(subscriber => {
       this.socket.on('currentVideo', (videoId: string) => {
         subscriber.next(videoId);
+      });
+    });
+  }
+
+  onRoomCreated() {
+    return new Observable<string>(subscriber => {
+      this.socket.on('roomCreated', data => {
+        subscriber.next(data.id);
       });
     });
   }
