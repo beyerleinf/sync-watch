@@ -1,3 +1,35 @@
 @startuml architecture
 
+enum UserRole {
+  viewer
+  modertor
+  admin
+}
+
+interface User {
+  id: string
+  name: string
+  role: UserRole
+}
+
+class Room 
+Room : - playlist: string[]
+Room : - users: string[]
+Room : + Room(namespace: SocketIO.Namespace)
+Room : + id: string
+Room : + join(user: User): void
+Room : + addVideo(videoId: string): void
+Room : + removeVideo(videoId: string): void
+Room : + setUserRole(userId: string, role: UserRole): void
+
+class RoomManager
+RoomManager : - {static} rooms: Room[]
+RoomManager : + {static} createRoom(): void
+
+RoomManager "1" *-- "0.." Room
+Room --> User
+User --> UserRole
+Room : + doSomething(id: string): string
+
+
 @enduml
